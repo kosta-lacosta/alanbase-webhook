@@ -1,6 +1,7 @@
 {
   "name": "alanbase-webhook",
   "version": "1.0.0",
+  "description": "Webhook handler for Alanbase",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
