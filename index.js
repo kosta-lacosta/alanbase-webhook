@@ -1,28 +1,24 @@
 const express = require('express');
 const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Middleware для парсинга JSON
 app.use(express.json());
 
+// Обработка POST-запроса
 app.post('/alanbase', (req, res) => {
-  const { event, click_id } = req.body;
-  if (!click_id) {
-    return res.status(400).json({
-      status: 'error',
-      message: 'Missing required parameter: click_id',
-      error_code: 'INVALID_PARAMETER'
-    });
-  }
+  console.log('===== Входящий вебхук от Alanbase =====');
+  console.log(JSON.stringify(req.body, null, 2));
+  console.log('=======================================');
 
-  console.log(`Event received: ${event}, Click ID: ${click_id}`);
-  // Здесь можно вставить вызовы к Zoho API и обработку событий
-
-  res.json({
-    status: 'success',
-    message: 'Event received',
-    data: req.body
-  });
+  res.json({ status: 'ok', message: 'Webhook получен' });
 });
 
-const PORT = process.env.PORT || 3000;
+// Проверка, что сервер жив
+app.get('/', (req, res) => {
+  res.send('Alanbase webhook listener is running!');
+});
+
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Сервер запущен на порту ${PORT}`);
 });
